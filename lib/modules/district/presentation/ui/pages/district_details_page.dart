@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:monetizze_app/core/shared/presentation/ui/widgets/appbar_widget.dart';
 
+import '../../../../../core/shared/presentation/ui/widgets/horizontal_text_with_subtext.dart';
+import '../../../../../core/utils/constants/style_constants.dart';
 import '../../../domain/entities/district_entity.dart';
 
 class DistrictDetailsPage extends StatelessWidget {
@@ -15,44 +17,41 @@ class DistrictDetailsPage extends StatelessWidget {
         title: '${district.municipalityName} - ${district.stateAcronym}',
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildDetailRow('Município:', district.municipalityName),
-            _buildDetailRow('Estado:', district.stateName),
-            _buildDetailRow('Sigla do Estado:', district.stateAcronym),
-            _buildDetailRow(
-                'ID do Município:', district.municipalityId.toString()),
-            _buildDetailRow('Microrregião:', district.microRegionName),
-            _buildDetailRow('Mesorregião:', district.mesoRegionName),
-          ],
+        padding: const EdgeInsets.all(StyleConstants.kScreenPadding),
+        child: Card(
+          child: Container(
+            margin: const EdgeInsets.all(StyleConstants.kScreenPaddingHalf),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                HorizontalTextWithSubtext(
+                  label: 'Município:',
+                  value: district.municipalityName,
+                ),
+                HorizontalTextWithSubtext(
+                  label: 'Estado:',
+                  value: district.stateName,
+                ),
+                HorizontalTextWithSubtext(
+                  label: 'Sigla do Estado:',
+                  value: district.stateAcronym,
+                ),
+                HorizontalTextWithSubtext(
+                  label: 'ID do Município:',
+                  value: district.municipalityId.toString(),
+                ),
+                HorizontalTextWithSubtext(
+                  label: 'Microrregião:',
+                  value: district.microRegionName,
+                ),
+                HorizontalTextWithSubtext(
+                  label: 'Mesorregião:',
+                  value: district.mesoRegionName,
+                ),
+              ],
+            ),
+          ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildDetailRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              value,
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -34,7 +34,7 @@ class _AppWidgetState extends State<AppWidget> {
     return MaterialApp.router(
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.grey.shade300,
+        scaffoldBackgroundColor: Colors.grey.shade100,
         colorScheme: const ColorScheme.light(
           primary: Color(0xff0030ff),
           secondary: Colors.blue,

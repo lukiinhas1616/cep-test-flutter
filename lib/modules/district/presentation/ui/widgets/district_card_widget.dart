@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:monetizze_app/core/utils/constants/style_constants.dart';
 import 'package:monetizze_app/modules/district/domain/entities/district_entity.dart';
 
 class DistrictCardWidget extends StatelessWidget {
@@ -12,22 +13,25 @@ class DistrictCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const defaultPadding = StyleConstants.kScreenPadding;
+    const halfDefaultPadding = StyleConstants.kScreenPaddingHalf;
     return GestureDetector(
       onTap: onCardTapCallback,
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(6),
         ),
-        elevation: 4,
-        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+        elevation: 2,
+        margin: const EdgeInsets.symmetric(
+            vertical: halfDefaultPadding, horizontal: 4.0),
         child: ListTile(
-          contentPadding: const EdgeInsets.all(16.0),
+          contentPadding: const EdgeInsets.all(defaultPadding),
           title: Text(
             district.municipalityName,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+            overflow: TextOverflow.ellipsis,
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

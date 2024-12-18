@@ -7,6 +7,7 @@ import 'package:monetizze_app/modules/district/presentation/controller/states/re
 import 'package:monetizze_app/modules/district/presentation/controller/states/successfully_got_districts_state.dart';
 
 import '../../../../../core/shared/presentation/ui/widgets/appbar_widget.dart';
+import '../../../../../core/utils/constants/style_constants.dart';
 import '../../controller/blocs/district_bloc.dart';
 import '../../controller/events/fetch_districts_event.dart';
 import '../../controller/events/redirect_to_details_event.dart';
@@ -60,7 +61,8 @@ class _DistrictsPageState extends State<DistrictsPage> {
           }
         },
         builder: (context, state) {
-          if (state is FetchingDistrictsState) {
+          if (state is FetchingDistrictsState ||
+              state is RedirectingToDetailsState) {
             return Center(
               child: CircularProgressIndicator(
                 color: Theme.of(context).colorScheme.secondary,
@@ -69,7 +71,7 @@ class _DistrictsPageState extends State<DistrictsPage> {
           }
           if (state is SuccessfullyGotDistrictsState) {
             return Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(StyleConstants.kScreenPadding),
               child: ListView.builder(
                 itemCount: state.districts.length,
                 itemBuilder: (context, index) {

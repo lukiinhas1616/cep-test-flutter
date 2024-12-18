@@ -32,6 +32,20 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.grey.shade300,
+        colorScheme: const ColorScheme.light(
+          primary: Color(0xff0030ff),
+          secondary: Colors.blue,
+          surface: Colors.white,
+        ),
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(
+            fontSize: 20,
+          ),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         GlobalWidgetsLocalizations.delegate,

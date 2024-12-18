@@ -15,7 +15,7 @@ class DefaultAppbarWidget extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: Theme.of(context).primaryColor,
       title: Text(
         title,
         style: const TextStyle(

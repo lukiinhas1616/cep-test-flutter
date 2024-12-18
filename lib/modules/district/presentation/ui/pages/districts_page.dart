@@ -14,14 +14,14 @@ import '../../controller/states/error_on_get_districts_state.dart';
 import '../../controller/states/fetching_districts_state.dart';
 import '../widgets/district_card_widget.dart';
 
-class DistrictListPage extends StatefulWidget {
-  const DistrictListPage({super.key});
+class DistrictsPage extends StatefulWidget {
+  const DistrictsPage({super.key});
 
   @override
-  State<DistrictListPage> createState() => _DistrictListPageState();
+  State<DistrictsPage> createState() => _DistrictsPageState();
 }
 
-class _DistrictListPageState extends State<DistrictListPage> {
+class _DistrictsPageState extends State<DistrictsPage> {
   final bloc = Modular.get<DistrictBloc>();
 
   @override

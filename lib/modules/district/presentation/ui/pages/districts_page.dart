@@ -37,14 +37,14 @@ class _DistrictsPageState extends State<DistrictsPage> {
       appBar: DefaultAppbarWidget(
         title: 'Listagem de distritos',
         refreshCallback: () {
-          bloc.add(const GetDistrictsEvent(forceRefresh: true));
+          bloc.add(const GetDistrictsEvent());
         },
       ),
       body: BlocConsumer(
         bloc: bloc,
         listener: (context, state) {
           if (state is IdleState) {
-            bloc.add(const GetDistrictsEvent());
+            bloc.add(GetDistrictsEvent());
           }
 
           if (state is ErrorOnGetDistrictsState) {
@@ -61,8 +61,7 @@ class _DistrictsPageState extends State<DistrictsPage> {
           }
         },
         builder: (context, state) {
-          if (state is FetchingDistrictsState ||
-              state is RedirectingToDetailsState) {
+          if (state is FetchingDistrictsState) {
             return Center(
               child: CircularProgressIndicator(
                 color: Theme.of(context).colorScheme.secondary,
@@ -86,6 +85,7 @@ class _DistrictsPageState extends State<DistrictsPage> {
               ),
             );
           }
+          if (state is RedirectingToDetailsState) return const SizedBox();
           return const Center(child: Text('Ocorreu um erro, tente novamente'));
         },
       ),

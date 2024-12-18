@@ -28,19 +28,22 @@ class DistrictBloc extends Bloc<DistrictEvents, AppState>
   final GetDistrictsUseCase _getDistrictsUseCase;
 
   final _cachedDistricts = <DistrictEntity>[];
+  DateTime _lastRefresh = DateTime.now();
 
   FutureOr<void> _onFetchDistrictsEvent(
     GetDistrictsEvent event,
     Emitter<AppState> emit,
   ) async {
-    if (_cachedDistricts.isNotEmpty && !event.forceRefresh) {
+    final timeSinceLastRefresh = DateTime.now().difference(_lastRefresh);
+    final timeSinceLastRefreshInSeconds = timeSinceLastRefresh.inSeconds;
+
+    if (_cachedDistricts.isNotEmpty && timeSinceLastRefreshInSeconds < 10) {
       emit(SuccessfullyGotDistrictsState(districts: _cachedDistricts));
       return;
     }
 
     emit(FetchingDistrictsState());
     final result = await _getDistrictsUseCase(const ZeroParameters());
-
     emit(
       result.fold(
         (failure) {
@@ -48,7 +51,11 @@ class DistrictBloc extends Bloc<DistrictEvents, AppState>
         },
         (success) {
           _cachedDistricts.addAll(success);
-          return SuccessfullyGotDistrictsState(districts: success);
+          _lastRefresh = DateTime.now();
+          return SuccessfullyGotDistrictsState(
+            districts: success,
+            lastRefresh: DateTime.now(),
+          );
         },
       ),
     );
@@ -61,8 +68,9 @@ class DistrictBloc extends Bloc<DistrictEvents, AppState>
     emit(
       RedirectingToDetailsState(district: event.district),
     );
-    await Future.delayed(const Duration(seconds: 1));
-    emit(IdleState());
+    emit(
+      SuccessfullyGotDistrictsState(districts: _cachedDistricts),
+    );
   }
 
   @override

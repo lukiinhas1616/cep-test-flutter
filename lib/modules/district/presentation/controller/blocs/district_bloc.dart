@@ -44,7 +44,7 @@ class DistrictBloc extends Bloc<DistrictEvents, AppState>
     emit(
       result.fold(
         (failure) {
-          return ErrorOnGetDistrictsState();
+          return ErrorOnGetDistrictsState(message: failure.message!);
         },
         (success) {
           _cachedDistricts.addAll(success);

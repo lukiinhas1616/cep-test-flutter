@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:monetizze_app/core/utils/api_routes/api_routes.dart';
+import 'package:monetizze_app/core/utils/exceptions_handler/dio_exceptions_handler.dart';
 import 'package:monetizze_app/core/utils/parameters/zero_parameters.dart';
 import 'package:monetizze_app/modules/district/domain/entities/district_entity.dart';
 import 'package:monetizze_app/modules/district/infra/dtos/district_dto.dart';
@@ -13,15 +15,17 @@ class DistrictRemoteDataSourceImp implements DistrictDataSource {
 
   @override
   Future<List<DistrictEntity>> getDistricts(ZeroParameters parameters) async {
-    final response = await _httpService.get(
-      ApiRoutes.getDistricts,
-    );
-    if (response.statusCode == 200) {
+    try {
+      final response = await _httpService.get(
+        ApiRoutes.getDistricts,
+      );
       return (response.data as List)
           .map((e) => DistrictDto.fromMap(e))
           .toList();
-    } else {
-      throw Exception("Erro ao buscar distritos");
+    } on DioException catch (e) {
+      throw Exception(DioExceptionHandler.handleDioError(e));
+    } on Exception catch (_) {
+      throw Exception("Houve uma falha, Favor, contate o suporte!");
     }
   }
 }

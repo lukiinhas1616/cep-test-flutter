@@ -44,7 +44,7 @@ class _DistrictsPageState extends State<DistrictsPage> {
         bloc: bloc,
         listener: (context, state) {
           if (state is IdleState) {
-            bloc.add(GetDistrictsEvent());
+            bloc.add(const GetDistrictsEvent());
           }
 
           if (state is ErrorOnGetDistrictsState) {

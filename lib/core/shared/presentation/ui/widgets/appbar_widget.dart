@@ -23,13 +23,14 @@ class DefaultAppbarWidget extends StatelessWidget
             ),
       ),
       actions: [
-        IconButton(
-          onPressed: refreshCallback,
-          icon: Icon(
-            Icons.refresh,
-            color: Theme.of(context).colorScheme.onSurface,
+        if (refreshCallback != null)
+          IconButton(
+            onPressed: refreshCallback,
+            icon: Icon(
+              Icons.refresh,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
-        ),
       ],
       centerTitle: true,
       shape: const RoundedRectangleBorder(

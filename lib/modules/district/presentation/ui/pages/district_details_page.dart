@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monetizze_app/core/shared/presentation/ui/widgets/appbar_widget.dart';
 
-import '../../../../../core/shared/presentation/ui/widgets/horizontal_text_with_subtext.dart';
+import '../../../../../core/shared/presentation/ui/widgets/vertical_text_with_subtext.dart';
 import '../../../../../core/utils/constants/style_constants.dart';
 import '../../../domain/entities/district_entity.dart';
 
@@ -20,31 +20,32 @@ class DistrictDetailsPage extends StatelessWidget {
         padding: const EdgeInsets.all(StyleConstants.kScreenPadding),
         child: Card(
           child: Container(
+            width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.all(StyleConstants.kScreenPaddingHalf),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                HorizontalTextWithSubtext(
+                VerticalTextWithSubtext(
                   label: 'Município:',
                   value: district.municipalityName,
                 ),
-                HorizontalTextWithSubtext(
+                VerticalTextWithSubtext(
                   label: 'Estado:',
                   value: district.stateName,
                 ),
-                HorizontalTextWithSubtext(
+                VerticalTextWithSubtext(
                   label: 'Sigla do Estado:',
                   value: district.stateAcronym,
                 ),
-                HorizontalTextWithSubtext(
+                VerticalTextWithSubtext(
                   label: 'ID do Município:',
                   value: district.municipalityId.toString(),
                 ),
-                HorizontalTextWithSubtext(
+                VerticalTextWithSubtext(
                   label: 'Microrregião:',
                   value: district.microRegionName,
                 ),
-                HorizontalTextWithSubtext(
+                VerticalTextWithSubtext(
                   label: 'Mesorregião:',
                   value: district.mesoRegionName,
                 ),

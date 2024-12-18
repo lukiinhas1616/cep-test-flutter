@@ -37,7 +37,7 @@ class _DistrictsPageState extends State<DistrictsPage> {
       appBar: DefaultAppbarWidget(
         title: 'Listagem de distritos',
         refreshCallback: () {
-          bloc.add(const GetDistrictsEvent());
+          bloc.add(const GetDistrictsEvent(forceRefresh: true));
         },
       ),
       body: BlocConsumer(

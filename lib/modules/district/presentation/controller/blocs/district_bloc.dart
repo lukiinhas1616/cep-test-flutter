@@ -33,7 +33,7 @@ class DistrictBloc extends Bloc<DistrictEvents, AppState>
     GetDistrictsEvent event,
     Emitter<AppState> emit,
   ) async {
-    if (_cachedDistricts.isNotEmpty) {
+    if (_cachedDistricts.isNotEmpty && !event.forceRefresh) {
       emit(SuccessfullyGotDistrictsState(districts: _cachedDistricts));
       return;
     }

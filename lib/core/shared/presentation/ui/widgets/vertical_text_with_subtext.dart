@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:monetizze_app/core/utils/constants/style_constants.dart';
 
-class HorizontalTextWithSubtext extends StatelessWidget {
-  const HorizontalTextWithSubtext({
+class VerticalTextWithSubtext extends StatelessWidget {
+  const VerticalTextWithSubtext({
     super.key,
     required this.label,
     required this.value,
@@ -15,7 +15,7 @@ class HorizontalTextWithSubtext extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: StyleConstants.kScreenPaddingHalf),
-      child: Row(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -24,7 +24,7 @@ class HorizontalTextWithSubtext extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(height: 8),
           Text(
             value,
             style: Theme.of(context).textTheme.bodyLarge,

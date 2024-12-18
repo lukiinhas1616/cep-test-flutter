@@ -5,6 +5,7 @@ import 'package:monetizze_app/modules/district/domain/usecases/get_districts_use
 import 'package:monetizze_app/modules/district/infra/datasources/remote/district_remote_datasource_imp.dart';
 import 'package:monetizze_app/modules/district/infra/repositories/district_repository_imp.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/blocs/district_bloc.dart';
+import 'package:monetizze_app/modules/district/presentation/ui/pages/district_details_page.dart';
 import 'package:monetizze_app/modules/district/presentation/ui/pages/district_list_page.dart';
 
 import '../app_module.dart';
@@ -35,5 +36,9 @@ class DistrictModule extends Module {
   @override
   void routes(RouteManager r) {
     r.child('/', child: (_) => const DistrictListPage());
+    r.child(
+      '/details',
+      child: (_) => DistrictDetailsPage(district: Modular.args.data),
+    );
   }
 }

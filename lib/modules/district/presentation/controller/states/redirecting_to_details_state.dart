@@ -4,13 +4,12 @@ import '../../../../../core/shared/presentation/controller/states/app_state.dart
 import '../../../../../core/utils/constants/global_state_constants.dart';
 import '../../../domain/entities/district_entity.dart';
 
-class SuccessfullyGotDistrictsState extends Equatable implements AppState {
-  const SuccessfullyGotDistrictsState({required this.districts});
+class RedirectingToDetailsState extends Equatable implements AppState {
+  RedirectingToDetailsState({required this.district});
 
-  final List<DistrictEntity> districts;
-
+  final DistrictEntity district;
   @override
-  String get message => GlobalStateConstants.successfullyGotDataState;
+  String get message => GlobalStateConstants.processingDataState;
 
   @override
   List<Object?> get props => [

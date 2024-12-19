@@ -82,7 +82,10 @@ void main() {
       'emite estado de redirecionamento quando evento de redirecionamento for disparado',
       build: () => districtBloc,
       act: (bloc) => bloc.add(const RedirectToDetailsEvent(district: district)),
-      expect: () => [isA<RedirectingToDetailsState>()],
+      expect: () => [
+        isA<RedirectingToDetailsState>(),
+        isA<SuccessfullyGotDistrictsState>()
+      ],
     );
   });
 }

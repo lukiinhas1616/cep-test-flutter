@@ -79,10 +79,8 @@ class _DistrictsPageState extends State<DistrictsPage> {
         },
         builder: (context, state) {
           if (state is FetchingDistrictsState) {
-            return Center(
-              child: CircularProgressIndicator(
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+            return const Center(
+              child: CircularProgressIndicator(),
             );
           }
           if (state is SuccessfullyGotDistrictsState) {
@@ -93,11 +91,11 @@ class _DistrictsPageState extends State<DistrictsPage> {
                   TextField(
                     controller: _searchController,
                     onChanged: (_) => _onSearchChanged(),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Pesquisar municipio',
-                      prefixIcon: const Icon(Icons.search),
+                      prefixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
                       ),
                     ),
                   ),

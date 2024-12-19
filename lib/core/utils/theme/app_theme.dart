@@ -16,8 +16,9 @@ class AppTheme {
           ),
         ),
         snackBarTheme: const SnackBarThemeData(
-          backgroundColor: Colors.blueGrey,
-          contentTextStyle: TextStyle(color: Colors.white),
+          backgroundColor: Color.fromARGB(255, 85, 58, 210),
+          contentTextStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       );
 }

@@ -49,14 +49,13 @@ class DistrictCardWidget extends StatelessWidget {
               children: [
                 Text(
                   district.stateName,
-                  style: const TextStyle(fontSize: 16),
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 Text(
                   'Sigla: ${district.stateAcronym}',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Colors.grey,
+                      ),
                 ),
               ],
             ),
@@ -64,7 +63,9 @@ class DistrictCardWidget extends StatelessWidget {
               backgroundColor: Theme.of(context).colorScheme.primary,
               child: Text(
                 district.stateAcronym,
-                style: const TextStyle(color: Colors.white),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Colors.white,
+                    ),
               ),
             ),
           ),

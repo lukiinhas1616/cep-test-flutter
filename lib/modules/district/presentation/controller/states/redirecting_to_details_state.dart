@@ -5,7 +5,7 @@ import '../../../../../core/utils/constants/global_state_constants.dart';
 import '../../../domain/entities/district_entity.dart';
 
 class RedirectingToDetailsState extends Equatable implements AppState {
-  RedirectingToDetailsState({required this.district});
+  const RedirectingToDetailsState({required this.district});
 
   final DistrictEntity district;
   @override

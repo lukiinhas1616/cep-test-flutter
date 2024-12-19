@@ -63,8 +63,8 @@ class _DistrictsPageState extends State<DistrictsPage> {
               SnackBar(content: Text(state.message)),
             );
           }
-
           if (state is RedirectingToDetailsState) {
+            _searchController.clear();
             Modular.to.pushNamed(
               DistrictModuleRoutes.districtDetails,
               arguments: state.district,

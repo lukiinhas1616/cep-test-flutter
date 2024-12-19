@@ -16,4 +16,15 @@ class DistrictDto {
       mesoRegionName: mesoRegion['nome'] as String,
     );
   }
+
+  Map<String, dynamic> entityToMap(DistrictEntity entity) {
+    return {
+      'id': entity.municipalityId,
+      'nome': entity.municipalityName,
+      'sigla': entity.stateAcronym,
+      'state_name': entity.stateName,
+      'micro_region_name': entity.microRegionName,
+      'meso_region_name': entity.mesoRegionName,
+    };
+  }
 }

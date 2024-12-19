@@ -6,16 +6,22 @@ import '../../../../../core/shared/presentation/ui/widgets/vertical_text_with_su
 import '../../../../../core/utils/constants/style_constants.dart';
 import '../../../domain/entities/district_entity.dart';
 
-class DistrictDetailsPage extends StatelessWidget {
+class DistrictDetailsPage extends StatefulWidget {
   final DistrictEntity district;
 
   const DistrictDetailsPage({super.key, required this.district});
 
   @override
+  State<DistrictDetailsPage> createState() => _DistrictDetailsPageState();
+}
+
+class _DistrictDetailsPageState extends State<DistrictDetailsPage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DefaultAppbarWidget(
-        title: '${district.municipalityName} - ${district.stateAcronym}',
+        title:
+            '${widget.district.municipalityName} - ${widget.district.stateAcronym}',
       ),
       body: Padding(
         padding: const EdgeInsets.all(StyleConstants.kScreenPadding),
@@ -26,27 +32,27 @@ class DistrictDetailsPage extends StatelessWidget {
               children: [
                 VerticalTextWithSubtextWidget(
                   label: 'Município:',
-                  value: district.municipalityName,
+                  value: widget.district.municipalityName,
                 ),
                 VerticalTextWithSubtextWidget(
                   label: 'Estado:',
-                  value: district.stateName,
+                  value: widget.district.stateName,
                 ),
                 VerticalTextWithSubtextWidget(
                   label: 'Sigla do Estado:',
-                  value: district.stateAcronym,
+                  value: widget.district.stateAcronym,
                 ),
                 VerticalTextWithSubtextWidget(
                   label: 'ID do Município:',
-                  value: district.municipalityId.toString(),
+                  value: widget.district.municipalityId.toString(),
                 ),
                 VerticalTextWithSubtextWidget(
                   label: 'Microrregião:',
-                  value: district.microRegionName,
+                  value: widget.district.microRegionName,
                 ),
                 VerticalTextWithSubtextWidget(
                   label: 'Mesorregião:',
-                  value: district.mesoRegionName,
+                  value: widget.district.mesoRegionName,
                 ),
               ],
             ),
@@ -64,10 +70,10 @@ class DistrictDetailsPage extends StatelessWidget {
                 ),
                 onPressed: () {
                   Clipboard.setData(
-                    ClipboardData(text: district.municipalityName),
+                    ClipboardData(text: widget.district.toString()),
                   );
                 },
-                child: const Text('Copiar dados'),
+                child: const Text('Copiar objeto'),
               ),
             ),
             const SizedBox(height: 30),

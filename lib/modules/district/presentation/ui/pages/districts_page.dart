@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:monetizze_app/core/shared/presentation/controller/states/idle_state.dart';
 import 'package:monetizze_app/core/utils/app_routes/districts_module_routes.dart';
+import 'package:monetizze_app/modules/district/presentation/controller/states/many_requests_state.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/redirecting_to_details_state.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/successfully_got_districts_state.dart';
 
@@ -57,6 +58,12 @@ class _DistrictsPageState extends State<DistrictsPage> {
             Modular.to.pushNamed(
               DistrictModuleRoutes.districtDetails,
               arguments: state.district,
+            );
+          }
+
+          if (state is ManyRequestsState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
             );
           }
         },

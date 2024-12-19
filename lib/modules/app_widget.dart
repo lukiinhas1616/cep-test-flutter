@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 
 import '../core/utils/listeners/statusbar_color_listener.dart';
+import '../core/utils/theme/app_theme.dart';
 
 class AppWidget extends StatefulWidget {
   const AppWidget({super.key});
@@ -32,20 +33,7 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.grey.shade100,
-        colorScheme: const ColorScheme.light(
-          primary: Color(0xff0030ff),
-          secondary: Colors.blue,
-          surface: Colors.white,
-        ),
-        textTheme: const TextTheme(
-          titleLarge: TextStyle(
-            fontSize: 20,
-          ),
-        ),
-      ),
+      theme: AppTheme.load,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         GlobalWidgetsLocalizations.delegate,

@@ -23,37 +23,49 @@ class DistrictCardWidget extends StatelessWidget {
         ),
         elevation: 2,
         margin: const EdgeInsets.symmetric(
-            vertical: halfDefaultPadding, horizontal: 4.0),
-        child: ListTile(
-          contentPadding: const EdgeInsets.all(defaultPadding),
-          title: Text(
-            district.municipalityName,
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-            overflow: TextOverflow.ellipsis,
-          ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                district.stateName,
-                style: const TextStyle(fontSize: 16),
+          vertical: halfDefaultPadding,
+          horizontal: 4.0,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              left: BorderSide(
+                color: Theme.of(context).colorScheme.secondary,
+                width: 4.0,
               ),
-              Text(
-                'Sigla: ${district.stateAcronym}',
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
+            ),
           ),
-          leading: CircleAvatar(
-            backgroundColor: Colors.blueAccent,
-            child: Text(
-              district.stateAcronym,
-              style: const TextStyle(color: Colors.white),
+          child: ListTile(
+            contentPadding: const EdgeInsets.all(defaultPadding),
+            title: Text(
+              district.municipalityName,
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  district.stateName,
+                  style: const TextStyle(fontSize: 16),
+                ),
+                Text(
+                  'Sigla: ${district.stateAcronym}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+            leading: CircleAvatar(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              child: Text(
+                district.stateAcronym,
+                style: const TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),

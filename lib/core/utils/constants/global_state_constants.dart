@@ -6,4 +6,5 @@ class GlobalStateConstants {
   static const successfullyGotDataState = 'Dados obtidos com sucesso!';
   static const errorOnGetDataState = 'Erro ao buscar dados!';
   static const processingDataState = 'Processando dados!';
+  static const manyRequestsState = 'Aguarde para tentar novamente!';
 }

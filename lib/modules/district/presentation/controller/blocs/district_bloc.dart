@@ -6,6 +6,7 @@ import 'package:monetizze_app/modules/district/domain/entities/district_entity.d
 import 'package:monetizze_app/modules/district/presentation/controller/events/district_events.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/error_on_get_districts_state.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/fetching_districts_state.dart';
+import 'package:monetizze_app/modules/district/presentation/controller/states/many_requests_state.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/redirecting_to_details_state.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/successfully_got_districts_state.dart';
 
@@ -38,6 +39,7 @@ class DistrictBloc extends Bloc<DistrictEvents, AppState>
     final timeSinceLastRefreshInSeconds = timeSinceLastRefresh.inSeconds;
 
     if (_cachedDistricts.isNotEmpty && timeSinceLastRefreshInSeconds < 10) {
+      emit(ManyRequestsState());
       emit(SuccessfullyGotDistrictsState(districts: _cachedDistricts));
       return;
     }

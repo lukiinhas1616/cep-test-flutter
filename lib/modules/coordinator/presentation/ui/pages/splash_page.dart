@@ -43,17 +43,25 @@ class _SplashPageState extends State<SplashPage> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Column(
+              spacing: 16,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.5,
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    child: Icon(
-                      Icons.ac_unit,
-                      size: 128,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondary,
+                    borderRadius: BorderRadius.circular(16),
                   ),
+                  padding: const EdgeInsets.all(16),
+                  child: Image.asset(
+                    'assets/icon/logo_without_bg.png',
+                    width: 70,
+                    height: 70,
+                  ),
+                ),
+                Text(
+                  'Carregando informações...',
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
             ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static get load => ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'Poppins',
         scaffoldBackgroundColor: Colors.grey.shade100,
         colorScheme: const ColorScheme.light(
           primary: Color(0xff0030ff),

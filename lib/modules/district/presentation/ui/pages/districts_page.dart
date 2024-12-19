@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:monetizze_app/core/shared/presentation/controller/states/idle_state.dart';
 import 'package:monetizze_app/core/utils/app_routes/districts_module_routes.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/many_requests_state.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/redirecting_to_details_state.dart';
@@ -9,8 +8,10 @@ import 'package:monetizze_app/modules/district/presentation/controller/states/su
 
 import '../../../../../core/shared/presentation/ui/widgets/appbar_widget.dart';
 import '../../../../../core/utils/constants/style_constants.dart';
+import '../../../../../core/utils/debouncer/debouncer.dart';
 import '../../controller/blocs/district_bloc.dart';
 import '../../controller/events/fetch_districts_event.dart';
+import '../../controller/events/get_districts_by_name_event.dart';
 import '../../controller/events/redirect_to_details_event.dart';
 import '../../controller/states/error_on_get_districts_state.dart';
 import '../../controller/states/fetching_districts_state.dart';
@@ -25,11 +26,23 @@ class DistrictsPage extends StatefulWidget {
 
 class _DistrictsPageState extends State<DistrictsPage> {
   final bloc = Modular.get<DistrictBloc>();
+  final _searchController = TextEditingController();
+  final Debouncer _debouncer = Debouncer(
+    delay: const Duration(milliseconds: 500),
+  );
 
   @override
   void initState() {
     super.initState();
     bloc.add(const GetDistrictsEvent());
+  }
+
+  void _onSearchChanged() {
+    _debouncer.run(() {
+      bloc.add(GetDistrictsByNameEvent(
+        text: _searchController.text.toLowerCase(),
+      ));
+    });
   }
 
   @override
@@ -38,16 +51,13 @@ class _DistrictsPageState extends State<DistrictsPage> {
       appBar: DefaultAppbarWidget(
         title: 'Listagem de distritos',
         refreshCallback: () {
+          _searchController.clear();
           bloc.add(const GetDistrictsEvent());
         },
       ),
       body: BlocConsumer(
         bloc: bloc,
         listener: (context, state) {
-          if (state is IdleState) {
-            bloc.add(const GetDistrictsEvent());
-          }
-
           if (state is ErrorOnGetDistrictsState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),
@@ -78,17 +88,36 @@ class _DistrictsPageState extends State<DistrictsPage> {
           if (state is SuccessfullyGotDistrictsState) {
             return Padding(
               padding: const EdgeInsets.all(StyleConstants.kScreenPadding),
-              child: ListView.builder(
-                itemCount: state.districts.length,
-                itemBuilder: (context, index) {
-                  final district = state.districts[index];
-                  return DistrictCardWidget(
-                    district: district,
-                    onCardTapCallback: () {
-                      bloc.add(RedirectToDetailsEvent(district: district));
-                    },
-                  );
-                },
+              child: Column(
+                children: [
+                  TextField(
+                    controller: _searchController,
+                    onChanged: (_) => _onSearchChanged(),
+                    decoration: InputDecoration(
+                      hintText: 'Pesquisar municipio',
+                      prefixIcon: const Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: state.districts.length,
+                      itemBuilder: (context, index) {
+                        final district = state.districts[index];
+                        return DistrictCardWidget(
+                          district: district,
+                          onCardTapCallback: () {
+                            bloc.add(
+                                RedirectToDetailsEvent(district: district));
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             );
           }

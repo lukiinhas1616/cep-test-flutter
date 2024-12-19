@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:monetizze_app/modules/district/domain/entities/district_entity.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/events/district_events.dart';
+import 'package:monetizze_app/modules/district/presentation/controller/events/get_districts_by_name_event.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/error_on_get_districts_state.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/fetching_districts_state.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/many_requests_state.dart';
@@ -24,6 +25,7 @@ class DistrictBloc extends Bloc<DistrictEvents, AppState>
   ) : super(IdleState()) {
     on<GetDistrictsEvent>(_onFetchDistrictsEvent);
     on<RedirectToDetailsEvent>(_onRedirectToDetailsEvent);
+    on<GetDistrictsByNameEvent>(_onFetchDistrictsByNameEvent);
   }
 
   final GetDistrictsUseCase _getDistrictsUseCase;
@@ -52,14 +54,25 @@ class DistrictBloc extends Bloc<DistrictEvents, AppState>
           return ErrorOnGetDistrictsState(message: failure.message!);
         },
         (success) {
-          _cachedDistricts.addAll(success);
+          _saveDistrictsInSession(success);
           _lastRefresh = DateTime.now();
           return SuccessfullyGotDistrictsState(
-            districts: success,
+            districts: _cachedDistricts,
             lastRefresh: DateTime.now(),
           );
         },
       ),
+    );
+  }
+
+  FutureOr<void> _onFetchDistrictsByNameEvent(
+    GetDistrictsByNameEvent event,
+    Emitter<AppState> emit,
+  ) async {
+    final sortedDistricts = _filterDistrictByText(_cachedDistricts, event.text);
+    emit(FetchingDistrictsState());
+    emit(
+      SuccessfullyGotDistrictsState(districts: sortedDistricts),
     );
   }
 
@@ -73,6 +86,18 @@ class DistrictBloc extends Bloc<DistrictEvents, AppState>
     emit(
       SuccessfullyGotDistrictsState(districts: _cachedDistricts),
     );
+  }
+
+  _saveDistrictsInSession(List<DistrictEntity> districts) {
+    _cachedDistricts.clear();
+    _cachedDistricts.addAll(districts);
+  }
+
+  _filterDistrictByText(List<DistrictEntity> districts, String textFilter) {
+    return districts
+        .where((district) =>
+            district.municipalityName.toLowerCase().contains(textFilter))
+        .toList();
   }
 
   @override

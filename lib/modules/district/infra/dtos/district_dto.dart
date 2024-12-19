@@ -8,8 +8,8 @@ class DistrictDto {
     final state = mesoRegion['UF'] as Map<String, dynamic>;
 
     return DistrictEntity(
-      municipalityId: municipality['id'] as int,
-      municipalityName: municipality['nome'] as String,
+      municipalityId: json['id'] as int,
+      municipalityName: json['nome'] as String,
       stateAcronym: state['sigla'] as String,
       stateName: state['nome'] as String,
       microRegionName: microRegion['nome'] as String,

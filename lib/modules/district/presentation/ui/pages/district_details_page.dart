@@ -28,36 +28,40 @@ class _DistrictDetailsPageState extends State<DistrictDetailsPage> {
         padding: const EdgeInsets.all(StyleConstants.kScreenPadding),
         child: Column(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                VerticalTextWithSubtextWidget(
-                  label: 'Município:',
-                  value: widget.district.municipalityName,
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    VerticalTextWithSubtextWidget(
+                      label: 'Município:',
+                      value: widget.district.municipalityName,
+                    ),
+                    VerticalTextWithSubtextWidget(
+                      label: 'Estado:',
+                      value: widget.district.stateName,
+                    ),
+                    VerticalTextWithSubtextWidget(
+                      label: 'Sigla do Estado:',
+                      value: widget.district.stateAcronym,
+                    ),
+                    VerticalTextWithSubtextWidget(
+                      label: 'ID do Município:',
+                      value: widget.district.municipalityId.toString(),
+                    ),
+                    VerticalTextWithSubtextWidget(
+                      label: 'Microrregião:',
+                      value: widget.district.microRegionName,
+                    ),
+                    VerticalTextWithSubtextWidget(
+                      label: 'Mesorregião:',
+                      value: widget.district.mesoRegionName,
+                    ),
+                    const SizedBox(height: 30),
+                  ],
                 ),
-                VerticalTextWithSubtextWidget(
-                  label: 'Estado:',
-                  value: widget.district.stateName,
-                ),
-                VerticalTextWithSubtextWidget(
-                  label: 'Sigla do Estado:',
-                  value: widget.district.stateAcronym,
-                ),
-                VerticalTextWithSubtextWidget(
-                  label: 'ID do Município:',
-                  value: widget.district.municipalityId.toString(),
-                ),
-                VerticalTextWithSubtextWidget(
-                  label: 'Microrregião:',
-                  value: widget.district.microRegionName,
-                ),
-                VerticalTextWithSubtextWidget(
-                  label: 'Mesorregião:',
-                  value: widget.district.mesoRegionName,
-                ),
-              ],
+              ),
             ),
-            const Spacer(),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(

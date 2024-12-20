@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:monetizze_app/core/utils/app_routes/districts_module_routes.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/many_requests_state.dart';
-import 'package:monetizze_app/modules/district/presentation/controller/states/redirecting_to_details_state.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/successfully_got_districts_state.dart';
+import 'package:monetizze_app/modules/district/presentation/ui/widgets/sort_bottomsheet_widget.dart';
 
 import '../../../../../core/shared/presentation/ui/widgets/appbar_widget.dart';
+import '../../../../../core/utils/app_routes/districts_module_routes.dart';
 import '../../../../../core/utils/constants/style_constants.dart';
 import '../../../../../core/utils/debouncer/debouncer.dart';
 import '../../controller/blocs/district_bloc.dart';
 import '../../controller/events/fetch_districts_event.dart';
-import '../../controller/events/get_districts_by_name_event.dart';
-import '../../controller/events/redirect_to_details_event.dart';
+import '../../controller/events/get_districts_by_filters_event.dart';
 import '../../controller/states/error_on_get_districts_state.dart';
 import '../../controller/states/fetching_districts_state.dart';
 import '../widgets/district_card_widget.dart';
@@ -38,11 +37,14 @@ class _DistrictsPageState extends State<DistrictsPage> {
   }
 
   void _onSearchChanged() {
-    _debouncer.run(() {
-      bloc.add(GetDistrictsByNameEvent(
-        text: _searchController.text.toLowerCase(),
-      ));
-    });
+    if (bloc.state is SuccessfullyGotDistrictsState) {
+      _debouncer.run(() {
+        bloc.add(GetDistrictsByFiltersEvent(
+          text: _searchController.text.toLowerCase(),
+          sortOption: (bloc.state as SuccessfullyGotDistrictsState).sortOption,
+        ));
+      });
+    }
   }
 
   @override
@@ -54,6 +56,27 @@ class _DistrictsPageState extends State<DistrictsPage> {
           _searchController.clear();
           bloc.add(const GetDistrictsEvent());
         },
+        sortCallback: () {
+          if (bloc.state is SuccessfullyGotDistrictsState) {
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return SortBottomSheetWidget(
+                  currentSelectedOption:
+                      (bloc.state as SuccessfullyGotDistrictsState).sortOption,
+                  onSelectedOption: (option) {
+                    bloc.add(
+                      GetDistrictsByFiltersEvent(
+                        text: _searchController.text.toLowerCase(),
+                        sortOption: option,
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          }
+        },
       ),
       body: BlocConsumer(
         bloc: bloc,
@@ -63,14 +86,6 @@ class _DistrictsPageState extends State<DistrictsPage> {
               SnackBar(content: Text(state.message)),
             );
           }
-          if (state is RedirectingToDetailsState) {
-            _searchController.clear();
-            Modular.to.pushNamed(
-              DistrictModuleRoutes.districtDetails,
-              arguments: state.district,
-            );
-          }
-
           if (state is ManyRequestsState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),
@@ -108,8 +123,10 @@ class _DistrictsPageState extends State<DistrictsPage> {
                         return DistrictCardWidget(
                           district: district,
                           onCardTapCallback: () {
-                            bloc.add(
-                                RedirectToDetailsEvent(district: district));
+                            Modular.to.pushNamed(
+                              DistrictModuleRoutes.districtDetails,
+                              arguments: district,
+                            );
                           },
                         );
                       },
@@ -119,7 +136,6 @@ class _DistrictsPageState extends State<DistrictsPage> {
               ),
             );
           }
-          if (state is RedirectingToDetailsState) return const SizedBox();
           return const Center(child: Text('Ocorreu um erro, tente novamente'));
         },
       ),

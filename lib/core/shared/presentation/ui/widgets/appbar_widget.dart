@@ -6,10 +6,12 @@ class DefaultAppbarWidget extends StatelessWidget
     super.key,
     required this.title,
     this.refreshCallback,
+    this.sortCallback,
   });
 
   final String title;
   final VoidCallback? refreshCallback;
+  final VoidCallback? sortCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,14 @@ class DefaultAppbarWidget extends StatelessWidget
             onPressed: refreshCallback,
             icon: Icon(
               Icons.refresh,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+        if (sortCallback != null)
+          IconButton(
+            onPressed: sortCallback,
+            icon: Icon(
+              Icons.sort,
               color: Theme.of(context).colorScheme.onSurface,
             ),
           ),

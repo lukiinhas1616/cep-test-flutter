@@ -14,7 +14,7 @@ class DistrictCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const defaultPadding = StyleConstants.kScreenPadding;
-    const halfDefaultPadding = StyleConstants.kScreenPaddingHalf;
+    const defaultPaddingHalf = StyleConstants.kScreenPaddingHalf;
     return GestureDetector(
       onTap: onCardTapCallback,
       child: Card(
@@ -23,7 +23,7 @@ class DistrictCardWidget extends StatelessWidget {
         ),
         elevation: 2,
         margin: const EdgeInsets.symmetric(
-          vertical: halfDefaultPadding,
+          vertical: defaultPaddingHalf,
           horizontal: 4.0,
         ),
         child: Container(

@@ -17,7 +17,7 @@ class DistrictDto {
     );
   }
 
-  Map<String, dynamic> entityToMap(DistrictEntity entity) {
+  static Map<String, dynamic> entityToMap(DistrictEntity entity) {
     return {
       'id': entity.municipalityId,
       'nome': entity.municipalityName,

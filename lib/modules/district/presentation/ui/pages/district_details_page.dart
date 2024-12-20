@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monetizze_app/core/shared/presentation/ui/widgets/appbar_widget.dart';
+import 'package:monetizze_app/modules/district/infra/dtos/district_dto.dart';
 
 import '../../../../../core/shared/presentation/ui/widgets/vertical_text_with_subtext_widget.dart';
 import '../../../../../core/utils/constants/style_constants.dart';
@@ -70,7 +71,9 @@ class _DistrictDetailsPageState extends State<DistrictDetailsPage> {
                 ),
                 onPressed: () {
                   Clipboard.setData(
-                    ClipboardData(text: widget.district.toString()),
+                    ClipboardData(
+                        text: DistrictDto.entityToMap(widget.district)
+                            .toString()),
                   );
                 },
                 child: const Text('Copiar objeto'),

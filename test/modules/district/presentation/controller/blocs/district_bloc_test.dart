@@ -10,10 +10,8 @@ import 'package:monetizze_app/modules/district/domain/entities/district_entity.d
 import 'package:monetizze_app/modules/district/domain/usecases/get_districts_usecase.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/blocs/district_bloc.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/events/fetch_districts_event.dart';
-import 'package:monetizze_app/modules/district/presentation/controller/events/redirect_to_details_event.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/error_on_get_districts_state.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/fetching_districts_state.dart';
-import 'package:monetizze_app/modules/district/presentation/controller/states/redirecting_to_details_state.dart';
 import 'package:monetizze_app/modules/district/presentation/controller/states/successfully_got_districts_state.dart';
 
 class MockGetDistrictsUseCase extends Mock implements GetDistrictsUseCase {}
@@ -75,16 +73,6 @@ void main() {
       expect: () => [
         isA<FetchingDistrictsState>(),
         isA<ErrorOnGetDistrictsState>(),
-      ],
-    );
-
-    blocTest<DistrictBloc, AppState>(
-      'emite estado de redirecionamento quando evento de redirecionamento for disparado',
-      build: () => districtBloc,
-      act: (bloc) => bloc.add(const RedirectToDetailsEvent(district: district)),
-      expect: () => [
-        isA<RedirectingToDetailsState>(),
-        isA<SuccessfullyGotDistrictsState>()
       ],
     );
   });
